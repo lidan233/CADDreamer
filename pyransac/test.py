@@ -14,6 +14,6 @@ def load_cache_dill( path):
 
 
 if __name__=='__main__':
-   v, n, l = load_cache_dill("/media/bizon/extradisk/CADDreamer/pyransac/test_data_for_pyransac.pth")
+   v, n, l = load_cache_dill("./test_data_for_pyransac.pth")
    res = fitpoints.py_fit(v, n, 0.3, l)
    print(res)
