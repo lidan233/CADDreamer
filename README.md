@@ -13,10 +13,10 @@ TO DO
 ## Download pretrained model
 Here are the links:
 
-* ckpts directory: [https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu](click here)
-* finetuned Vae directory: [https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg](click here)
-* Check the input here: [https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4](click here)
-* Check the output here: [https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m](click here)
+* ckpts directory: [save as ckpts directory](https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu)
+* finetuned Vae directory: [save as finetuned_vae_normal](https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg)
+* Check the input here: [check the input example](https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4)
+* Check the output here: [check the output example (segmentation results)](https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m)
 
 ## Todo List
 We are focusing on the revision of the paper based on the reviewers' comments.
