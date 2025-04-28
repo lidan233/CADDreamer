@@ -19,11 +19,11 @@ Here are the links:
 * Check the output here: [check the output example (segmentation results)](https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m)
 
 ## Todo List
-We are focusing on the revision of the paper based on the reviewers' comments.
 Code and dataset will be released before the conference.
 Please stay tuned.
+If you have any questions, please contact me via email: Li.Yuan@utdallas.edu. 
 - [x] Release `Tools` code, including `pyransac`, `neus`, and so on.
-- [] Release `Multi-view diffusion` code.
+- [ ] Release `Multi-view diffusion` code.
 - [ ] Release `Primitive Stitching` code.
 - [ ] Release `Inference` code.
 - [ ] Release `Training` code.
