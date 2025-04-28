@@ -13,15 +13,14 @@ TO DO
 ## Download pretrained model
 Here are the links:
 
-* ckpts directory: [save as ckpts directory](https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu)
-* finetuned Vae directory: [save as finetuned_vae_normal](https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg)
+* Ckpts directory: [save as ckpts directory](https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu)
+* Finetuned Vae directory: [save as finetuned_vae_normal directory](https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg)
 * Check the input here: [check the input example](https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4)
 * Check the output here: [check the output example (segmentation results)](https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m)
 
 ## Todo List
 Code and dataset will be released before the conference.
-Please stay tuned.
-If you have any questions, please contact me via email: Li.Yuan@utdallas.edu. 
+Please stay tuned. If you have any question, please contact me via email: Li.Yuan@utdallas.edu. 
 - [x] Release `Tools` code, including `pyransac`, `neus`, and so on.
 - [ ] Release `Multi-view diffusion` code.
 - [ ] Release `Primitive Stitching` code.
