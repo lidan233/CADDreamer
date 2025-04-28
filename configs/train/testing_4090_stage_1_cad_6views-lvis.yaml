@@ -1,0 +1,51 @@
+pretrained_model_name_or_path: './ckpts/wonder3d-v1.0'
+revision: null
+
+
+validation_dataset:
+  root_dir: './test_real_images' # change to your path
+  num_views: 6
+  bg_color: 'white'
+  img_wh: [256, 256]
+  crop_size: 256
+  filepath: "test.jpg"
+
+save_dir: "./test_outputs"
+
+seed: 42
+validation_batch_size: 1
+
+dataloader_num_workers:  0
+local_rank: -1
+
+pipe_kwargs:
+  camera_embedding_type: 'e_de_da_sincos'
+  num_views: 6
+
+pipe_validation_kwargs:
+  eta: 1.0
+unet_from_pretrained_kwargs:
+  camera_embedding_type: 'e_de_da_sincos'
+  projection_class_embeddings_input_dim: 10  # modify
+  num_views: 6
+  sample_size: 8
+  zero_init_conv_in: true
+  zero_init_camera_projection: true
+  cd_attention_last: false
+  cd_attention_mid: false
+  multiview_attention: true
+  sparse_mv_attention: false
+  mvcd_attention: false
+validation_guidance_scales: [1., 3.]
+validation_grid_nrow: 12
+
+camera_embedding_lr_mult: 10.
+
+num_views: 6
+camera_embedding_type: 'e_de_da_sincos'
+pred_type: joint   
+enable_xformers_memory_efficient_attention: true
+cond_on_normals: false
+cond_on_colors: true
+
+

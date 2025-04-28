@@ -7,15 +7,23 @@
 CADDreamer is a novel approach for generating high-quality boundary representations (B-rep) of CAD objects from single-view RGB images. Unlike existing 3D generative models that produce dense and unstructured meshes, CADDreamer creates compact, structured, and sharply-edged CAD models that are comparable to those created by human designers.
 
 
-## Installation 
+## Installation
+TO DO
 
+## Download pretrained model
+Here are the links you provided:
+
+* ckpts directory: [https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu](https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu)
+* finetuned Vae directory: [https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg](https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg)
+* Check the input here: [https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4](https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4)
+* Check the output here: [https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m](https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m)
 
 ## Todo List
 We are focusing on the revision of the paper based on the reviewers' comments.
-Code  and dataset will be released before the conference. 
-Please stay tuned. 
-- [ ] Release `Tools` code, including `pyransac`, `neus`, and so on. 
-- [ ] Release `Multi-view diffusion` code.
+Code and dataset will be released before the conference.
+Please stay tuned.
+- [x] Release `Tools` code, including `pyransac`, `neus`, and so on.
+- [] Release `Multi-view diffusion` code.
 - [ ] Release `Primitive Stitching` code.
 - [ ] Release `Inference` code.
 - [ ] Release `Training` code.
