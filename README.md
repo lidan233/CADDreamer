@@ -11,12 +11,12 @@ CADDreamer is a novel approach for generating high-quality boundary representati
 TO DO
 
 ## Download pretrained model
-Here are the links you provided:
+Here are the links:
 
-* ckpts directory: [https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu](https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu)
-* finetuned Vae directory: [https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg](https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg)
-* Check the input here: [https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4](https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4)
-* Check the output here: [https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m](https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m)
+* ckpts directory: [https://utdallas.box.com/s/6rwdqoyhgu38udh2cfsf2kympe70i5pu](click here)
+* finetuned Vae directory: [https://utdallas.box.com/s/gpvwli8evucmfjd7hzl2y4f4odjm0dfg](click here)
+* Check the input here: [https://utdallas.box.com/s/2cnqyv5b9wun5nptp61y7x8hej0ejve4](click here)
+* Check the output here: [https://utdallas.box.com/s/jpkb2h0n0frr3svrd25305txlnmsmd3m](click here)
 
 ## Todo List
 We are focusing on the revision of the paper based on the reviewers' comments.
