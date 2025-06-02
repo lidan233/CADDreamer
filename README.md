@@ -86,11 +86,11 @@ Please stay tuned. If you have any question, please contact me via email: Li.Yua
 - [x] Release `Tools` code, including `pyransac`, `neus`, and so on.
 - [x] Release `Multi-view diffusion` code.
 - [x] Release `Primitive Stitching` code.
-- [x] Release `Inference` code. Released the test code in real normal images.
-- [x] Release `Inference` code. Released the test code in synthetic normal images.
+- [x] Release `Testing` code. Released the test code in real normal images.
+- [x] Release `Testing` code. Released the test code in synthetic normal images.
 - [ ] Release `Testing` dataset.
 - [ ] Release `Training` code.
-- [ ] Release `Datasets`.
+- [ ] Release `Testing Datasets`.
 
 ## Related Projects
 - [Wonder3D: Single Image to 3D using Cross-Domain Diffusion](https://github.com/xxlong0/Wonder3D)
