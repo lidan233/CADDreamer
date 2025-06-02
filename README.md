@@ -69,14 +69,14 @@ The following command loads all processed normal images from the ./test_real_ima
 In the second step, we perform segmentation based on the reconstructed mesh and multi-view images. 
 The following command executes the second stage segmentation task based on the generated results:
  ```bash
- python3 test_syne_images_stage_2_segmentation.py  --config_dir /mnt/disk/Wonder3D_xmu/our_outputs/test_mv_outputs/cropsize-256-cfg1.0/12656_0deepcad --review True
+ python3 test_syne_images_stage_2_segmentation.py  --config_dir ./cached_output/cropsize-256-cfg1.0-syne/0_0deepcad --review True
  ```
  This task will cache segmentation results in the neus/temp_mid_results folder.
 
 #### 3. Reconstruct STEP File Using Intersection Strategy and Primitive Stitching
 Since primitive stitching is a time-consuming operation, we recommend skipping it if normal fitting can successfully reconstruct the CAD model. 
  ```bash
- python3 test_syne_images_stage_3_generate_step.py  --config_dir /mnt/disk/Wonder3D_xmu/our_outputs/test_mv_outputs/cropsize-256-cfg1.0/12656_0deepcad --review True
+ python3 test_syne_images_stage_3_generate_step.py  --config_dir ./cached_output/cropsize-256-cfg1.0-syne/0_0deepcad --review True
  ```
 More generation results can be found in the cover GIF.
 
