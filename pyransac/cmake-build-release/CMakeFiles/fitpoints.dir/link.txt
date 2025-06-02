@@ -1,1 +1,1 @@
-/usr/bin/c++ -fPIC  -fpermissive -flto -shared  -o fitpoints.cpython-310-x86_64-linux-gnu.so CMakeFiles/fitpoints.dir/generate_points.cpp.o  -Wl,-rpath,/home/bizon/anaconda3/lib liblibransac.a /home/bizon/anaconda3/lib/libpython3.10.so 
+/usr/bin/c++ -fPIC -fpermissive -flto -shared  -o fitpoints.cpython-310-x86_64-linux-gnu.so CMakeFiles/fitpoints.dir/generate_points.cpp.o  liblibransac.a 

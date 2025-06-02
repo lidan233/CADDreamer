@@ -1691,7 +1691,6 @@ from neus.newton.process import  *
 from tqdm import tqdm
 from utils.util import *
 from utils.visualization import *
-from utils.visual import *
 from OCC.Core.TopAbs import TopAbs_FORWARD, TopAbs_REVERSED
 from OCC.Core.TopAbs import TopAbs_WIRE, TopAbs_EDGE
 from OCC.Core.BRepAlgoAPI import BRepAlgoAPI_Section

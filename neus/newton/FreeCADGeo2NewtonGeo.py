@@ -19,6 +19,7 @@ from copy import deepcopy
 import trimesh as tri
 from collections import defaultdict
 import potpourri3d
+from utils.visualization import  *
 
 def get_boundary_edges(mesh):
     unique_edges = mesh.edges[tri.grouping.group_rows(mesh.edges_sorted, require_count=1)]
@@ -473,8 +474,64 @@ def topology_checker(shapes, topology_graph, newton_shapes):
                     flag = False
     return flag
 
+import networkx as nx 
 
 def find_all_relationship(shapes, graph):
+    relationship = []
+    
+    parallel_relationship_graph = nx.Graph()
+    for i in range(len(shapes)):
+        parallel_relationship_graph.add_node(i)
+    
+    vertical_relationship_graph = nx.Graph()
+    for i in range(len(shapes)):
+        vertical_relationship_graph.add_node(i)
+    
+    sameline_relationship_graph = nx.Graph()
+    for i in range(len(shapes)):
+        sameline_relationship_graph.add_node(i)
+
+    for node in graph.nodes:
+        if len(list(graph.neighbors(node))) == 0:
+            continue 
+        for neighbor in range(node):
+            shape_i = shapes[node]
+            shape_j = shapes[neighbor]
+            if shape_i.isvertical(shape_j):
+                relationship.append([node, neighbor, 'vertical'])
+                print("vertice_loss:" , shape_i.vertical_loss(shape_j))
+                vertical_relationship_graph.add_edge(node, neighbor, type='vertical')
+            if shape_i.isparallel(shape_j):
+                relationship.append([node, neighbor, 'parallel'])
+                print("parallel_loss:" ,shape_i.parallel_loss(shape_j))
+               
+                
+                node_comp = None
+                neighbor_comp = None
+                for comp in nx.connected_components(parallel_relationship_graph):
+                    if node in comp:
+                        node_comp = comp
+                    if neighbor in comp:
+                        neighbor_comp = comp
+                for t_node in node_comp:
+                    for t_neighbor in neighbor_comp:
+                        if graph.has_edge(t_node, t_neighbor) and shapes[t_node].getType() == 'Plane' and shapes[t_neighbor].getType() == 'Plane':
+                            return None 
+                parallel_relationship_graph.add_edge(node, neighbor, type='parallel') 
+                return None 
+            
+            if shape_i.issameline(shape_j):
+                relationship.append([node, neighbor, 'sameline'])
+                sameline_relationship_graph.add_edge(node, neighbor, type='sameline')
+            if shape_j.issameline(shape_i):
+                relationship.append([node, neighbor, 'sameline'])
+                sameline_relationship_graph.add_edge(node, neighbor, type='sameline')
+
+    return relationship
+
+
+
+def find_neighbor_relationship(shapes, graph):
     relationship = []
     for node in graph.nodes:
         for neighbor in graph.neighbors(node):
@@ -486,14 +543,11 @@ def find_all_relationship(shapes, graph):
             if shape_i.isparallel(shape_j):
                 relationship.append([node, neighbor, 'parallel'])
                 print("parallel_loss:" ,shape_i.parallel_loss(shape_j))
-
             if shape_i.issameline(shape_j):
                 relationship.append([node, neighbor, 'sameline'])
             if shape_j.issameline(shape_i):
                 relationship.append([node, neighbor, 'sameline'])
-
     return relationship
-
 
 
 def regulaize_parameters(shapes, parameters, topology_graph, trainable_param_size):

@@ -377,9 +377,6 @@ def minimize_parallel(
             "step": (time_end - time_start) / out.nfev,
         }
 
-    if constraints is not None:
-        print("fiuck")
-
     return out
 
 

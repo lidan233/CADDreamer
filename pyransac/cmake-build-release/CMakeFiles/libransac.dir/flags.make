@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/include/eigen3 -I/media/bizon/extradisk/CADDreamer/pyransac -I/media/bizon/extradisk/CADDreamer/pyransac/pybind11/include -I/home/bizon/anaconda3/include/python3.10
+CXX_INCLUDES = -I/usr/include/eigen3 -I/mnt/disk/Wonder3D_xmu/pyransac/. -I/mnt/disk/Wonder3D_xmu/pyransac/./pybind11/include -I/home/bizon/anaconda3/bin/python3.10
 
-CXX_FLAGS =  -fpermissive -fPIC
+CXX_FLAGS = -fpermissive -fPIC
 

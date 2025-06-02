@@ -1,6 +1,6 @@
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles/libransac.dir
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles/fitpoints.dir
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles/edit_cache.dir
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles/rebuild_cache.dir
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/pybind11/CMakeFiles/edit_cache.dir
-/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/pybind11/CMakeFiles/rebuild_cache.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles/libransac.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles/fitpoints.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles/edit_cache.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles/rebuild_cache.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/pybind11/CMakeFiles/edit_cache.dir
+/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/pybind11/CMakeFiles/rebuild_cache.dir

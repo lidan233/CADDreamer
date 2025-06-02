@@ -170,7 +170,175 @@ class Cone:
                 distances.append(distance3)
 
             return distances[np.argmin(distances)], self.inv_rotate_matrix @ project_points[np.argmin(distances)]
-
+    
+    def batch_distance(self, points):
+        points = np.array(points)
+        if points.ndim == 1:
+            points = points.reshape(1, 3)
+            
+        # Add homogeneous coordinate
+        p_u = np.hstack([points, np.ones((points.shape[0], 1))])
+        
+        # Transform all points at once
+        change_directions = (self.rotate_matrix @ p_u.T).T
+        
+        # Calculate distances to axis for all points
+        distances_to_axis = np.sqrt(change_directions[:, 0]**2 + change_directions[:, 1]**2)
+        
+        # Create axis projection points
+        axis_project_points = np.zeros((points.shape[0], 3))
+        axis_project_points[:, 2] = change_directions[:, 2]
+        
+        # Calculate radius at each z-coordinate
+        radii = np.abs(np.tan(self.m_angle) * change_directions[:, 2])
+        
+        # Handle special cases
+        zero_distance_mask = (distances_to_axis == 0)
+        if np.any(zero_distance_mask):
+            change_directions[zero_distance_mask, 0] = 1e-9
+            change_directions[zero_distance_mask, 1] = 0
+            distances_to_axis[zero_distance_mask] = 1e-9
+            
+        zero_z_mask = (change_directions[:, 2] == 0)
+        if np.any(zero_z_mask):
+            change_directions[zero_z_mask, 2] = -1e-9
+            axis_project_points[zero_z_mask, 2] = -1e-9
+            radii[zero_z_mask] = np.abs(np.tan(self.m_angle) * -1e-9)
+        
+        # Use only the 3D part of change_directions
+        change_directions_3d = change_directions[:, :3]
+        
+        # Split processing based on z-coordinate sign
+        positive_z_mask = (change_directions_3d[:, 2] > 0)
+        negative_z_mask = ~positive_z_mask
+        
+        # Initialize results arrays
+        distances = np.zeros(points.shape[0])
+        projected_points = np.zeros((points.shape[0], 4))
+        
+        # Process points with positive z
+        if np.any(positive_z_mask):
+            # Calculate horizontal projection points
+            horizen_project_points = np.zeros((np.sum(positive_z_mask), 3))
+            horizen_project_points[:, 0] = change_directions_3d[positive_z_mask, 0] / distances_to_axis[positive_z_mask] * radii[positive_z_mask]
+            horizen_project_points[:, 1] = change_directions_3d[positive_z_mask, 1] / distances_to_axis[positive_z_mask] * radii[positive_z_mask]
+            horizen_project_points[:, 2] = axis_project_points[positive_z_mask, 2]
+            
+            # Calculate extra vectors
+            extra_vectors = change_directions_3d[positive_z_mask] - horizen_project_points
+            
+            # Calculate horizontal projection vectors
+            horizen_norms = np.linalg.norm(horizen_project_points, axis=1, keepdims=True)
+            horizen_project_vectors = horizen_project_points / horizen_norms
+            
+            # Calculate projection vectors
+            dots = np.sum(extra_vectors * horizen_project_vectors, axis=1, keepdims=True)
+            project_vectors = dots * horizen_project_vectors
+            
+            # Calculate projection points
+            project_points = horizen_project_points + project_vectors
+            
+            # Calculate distances
+            pos_distances = np.linalg.norm(change_directions_3d[positive_z_mask] - project_points, axis=1)
+            
+            # Prepare homogeneous coordinates
+            project_align_points = np.hstack([project_points, np.ones((project_points.shape[0], 1))])
+            
+            # Store results for positive z points
+            distances[positive_z_mask] = pos_distances
+            projected_points[positive_z_mask] = project_align_points
+        
+        # Process points with negative z
+        if np.any(negative_z_mask):
+            neg_count = np.sum(negative_z_mask)
+            
+            # For each negative z point, we need to consider multiple candidate points
+            # and choose the closest one. We'll handle this by creating arrays for each candidate.
+            
+            # Candidate 1: First horizontal projection
+            horizen_project_points1 = np.zeros((neg_count, 3))
+            horizen_project_points1[:, 0] = change_directions_3d[negative_z_mask, 0] / distances_to_axis[negative_z_mask] * radii[negative_z_mask]
+            horizen_project_points1[:, 1] = change_directions_3d[negative_z_mask, 1] / distances_to_axis[negative_z_mask] * radii[negative_z_mask]
+            horizen_project_points1[:, 2] = axis_project_points[negative_z_mask, 2]
+            
+            # Candidate 2: Second horizontal projection (negative radius)
+            horizen_project_points2 = np.zeros((neg_count, 3))
+            horizen_project_points2[:, 0] = change_directions_3d[negative_z_mask, 0] / distances_to_axis[negative_z_mask] * (-radii[negative_z_mask])
+            horizen_project_points2[:, 1] = change_directions_3d[negative_z_mask, 1] / distances_to_axis[negative_z_mask] * (-radii[negative_z_mask])
+            horizen_project_points2[:, 2] = axis_project_points[negative_z_mask, 2]
+            
+            # Calculate extra vectors
+            extra_vectors1 = change_directions_3d[negative_z_mask] - horizen_project_points1
+            extra_vectors2 = change_directions_3d[negative_z_mask] - horizen_project_points2
+            
+            # Calculate horizontal projection vectors
+            horizen_norms1 = np.linalg.norm(horizen_project_points1, axis=1, keepdims=True)
+            horizen_norms2 = np.linalg.norm(horizen_project_points2, axis=1, keepdims=True)
+            
+            horizen_project_vectors1 = horizen_project_points1 / horizen_norms1
+            horizen_project_vectors2 = horizen_project_points2 / horizen_norms2
+            
+            # Calculate projection vectors
+            dots1 = np.sum(extra_vectors1 * horizen_project_vectors1, axis=1, keepdims=True)
+            dots2 = np.sum(extra_vectors2 * horizen_project_vectors2, axis=1, keepdims=True)
+            
+            project_vectors1 = dots1 * horizen_project_vectors1
+            project_vectors2 = dots2 * horizen_project_vectors2
+            
+            # Calculate projection points
+            project_points1 = horizen_project_points1 + project_vectors1
+            project_points2 = horizen_project_points2 + project_vectors2
+            
+            # Candidate 3: Origin
+            project_points3 = np.zeros((neg_count, 3))
+            
+            # Calculate distances for each candidate
+            distances1 = np.linalg.norm(change_directions_3d[negative_z_mask] - project_points1, axis=1)
+            distances2 = np.linalg.norm(change_directions_3d[negative_z_mask] - project_points2, axis=1)
+            distances3 = np.linalg.norm(change_directions_3d[negative_z_mask], axis=1)
+            
+            # Prepare homogeneous coordinates
+            project_align_points1 = np.hstack([project_points1, np.ones((neg_count, 1))])
+            project_align_points2 = np.hstack([project_points2, np.ones((neg_count, 1))])
+            project_align_points3 = np.hstack([project_points3, np.ones((neg_count, 1))])
+            
+            # Filter candidates by z >= 0 condition
+            valid_mask1 = (project_align_points1[:, 2] >= 0)
+            valid_mask2 = (project_align_points2[:, 2] >= 0)
+            valid_mask3 = (project_align_points3[:, 2] >= 0)
+            
+            # Initialize with large distances
+            neg_distances = np.full(neg_count, np.inf)
+            neg_projected_points = np.zeros((neg_count, 4))
+            
+            # Update with valid candidates
+            for i in range(neg_count):
+                candidates_distances = []
+                candidates_points = []
+                
+                if valid_mask1[i]:
+                    candidates_distances.append(distances1[i])
+                    candidates_points.append(project_align_points1[i])
+                
+                if valid_mask2[i]:
+                    candidates_distances.append(distances2[i])
+                    candidates_points.append(project_align_points2[i])
+                
+                if valid_mask3[i]:
+                    candidates_distances.append(distances3[i])
+                    candidates_points.append(project_align_points3[i])
+                
+                if candidates_distances:
+                    min_idx = np.argmin(candidates_distances)
+                    neg_distances[i] = candidates_distances[min_idx]
+                    neg_projected_points[i] = candidates_points[min_idx]
+            
+            # Store results for negative z points
+            distances[negative_z_mask] = neg_distances
+            projected_points[negative_z_mask] = neg_projected_points
+    
+        return distances
+    
     def project(self, p):
         dis, project_point = self.distance(p)
         return project_point[:3]

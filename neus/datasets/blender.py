@@ -10,7 +10,7 @@ import torchvision.transforms.functional as TF
 
 import pytorch_lightning as pl
 import sys
-sys.path.append("/home/lidan/Wonder3D/neus")
+sys.path.append("/mnt/disk/CADDreamer/neus")
 import datasets
 from models.ray_utils import get_ray_directions
 from utils.misc import get_rank

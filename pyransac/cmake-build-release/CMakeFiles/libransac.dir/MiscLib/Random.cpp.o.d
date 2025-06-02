@@ -1,5 +1,5 @@
 CMakeFiles/libransac.dir/MiscLib/Random.cpp.o: \
- /media/bizon/extradisk/CADDreamer/pyransac/MiscLib/Random.cpp \
+ /mnt/disk/Wonder3D_xmu/pyransac/MiscLib/Random.cpp \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -24,4 +24,4 @@ CMakeFiles/libransac.dir/MiscLib/Random.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /media/bizon/extradisk/CADDreamer/pyransac/MiscLib/Random.h
+ /mnt/disk/Wonder3D_xmu/pyransac/MiscLib/Random.h

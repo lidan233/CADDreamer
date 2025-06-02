@@ -10,9 +10,19 @@ class Plane:
         self.m_axisDir = normal
         self.dist = np.dot(self.pos, self.normal)
 
+    def batch_distance(self, points):
+        points = np.array(points)
+        if points.ndim == 1:
+            points = points.reshape(1, 3)
 
+        dot_products = np.dot(points, self.normal)
+        distances = np.abs(self.dist - dot_products)
+        return distances
+    
+    
     def distance(self, pos):
         return np.abs(self.dist - np.dot(self.normal, pos)), self.project(pos)
+
 
     def haveRadius(self):
         return False

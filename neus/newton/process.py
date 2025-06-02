@@ -11,13 +11,13 @@ import FreeCAD as App
 import Part
 import Mesh
 
-sys.path.append("/media/bizon/extradisk/Wonder3D/neus")
+sys.path.append("/mnt/disk/CADDreamer/neus")
 from newton.FreeCADGeo2NewtonGeo import *
 from newton.newton_primitives import *
 from fit_surfaces.fitting_one_surface import process_one_surface
 from fit_surfaces.fitting_utils import project_to_plane
 
-sys.path.append("/media/bizon/extradisk/Wonder3D/pyransac/cmake-build-release")
+sys.path.append("/mnt/disk/CADDreamer/pyransac/cmake-build-release")
 import fitpoints
 # import polyscope as ps
 import trimesh as tri
@@ -280,7 +280,6 @@ def recover_axis_params(out_parameters, out_parameters_size, out_axis_idx, newto
 
 
 def get_sameline_components(relationship_find, newton_shapes,  compressed_parameters, compressed_parameters_size, compressed_axis_idx ):
-    print("fuic")
     sameline_graph = nx.DiGraph()
     for i, j, rela_type in relationship_find:
         if i==j:
@@ -327,10 +326,11 @@ def get_sameline_components(relationship_find, newton_shapes,  compressed_parame
 
             current_to_next_center = np.array(next_center) - np.array(current_center)
             current_to_next_t = current_to_next_center.dot(current_axis)
-            if new_compressed_parameters[next_idx] == len(newton_shapes[next_idx].output_params()):
+            if len(new_compressed_parameters[next_idx]) == len(newton_shapes[next_idx].output_params()):
                 next_new_params = newton_shapes[next_idx].output_axis_params() +  [current_to_next_t] + newton_shapes[next_idx].output_no_axis_params()[3:]
             else:
                 next_new_params = [current_to_next_t] + newton_shapes[next_idx].output_no_axis_params()[3:]
+            print("current_axis: ", current_axis, "next center: ", next_center, "next_id ", next_idx )
             new_compressed_parameters[next_idx] = next_new_params
 
     out_compressed_parameters = []
@@ -352,26 +352,26 @@ def get_sameline_components(relationship_find, newton_shapes,  compressed_parame
     #         center_idx = out_compressed_parameters_sizes[compressed_pos_idx[i][0]]
     #         center_param = out_compressed_parameters[center_idx[0]:center_idx[1]][0:3]
     #         centers[compressed_pos_idx[i][0]] = center_param
-    #
+    
     # uncompressed_parameters = [
     #     out_compressed_parameters[out_compressed_parameters_sizes[i][0]:out_compressed_parameters_sizes[i][1]]
     #     for i in range(len(out_compressed_parameters_sizes))
     # ]
-    #
+    
     # for squeeze in compressed_pos_idx:
     #     for i in range(len(squeeze)-1):
     #         current_idx = squeeze[i]
     #         next_idx = squeeze[i+1]
-    #
+    
     #         father_axis_idx = compressed_axis_idx[current_idx]
     #         if father_axis_idx < 0:
     #             father_axis_idx = (father_axis_idx + 1) * -1
-    #
+    
     #         current_center = centers[current_idx]
     #         father_axis_param_size = out_compressed_parameters_sizes[father_axis_idx]
     #         current_axis = out_compressed_parameters[father_axis_param_size[0]:father_axis_param_size[1]][:3]
     #         current_axis = current_axis / np.linalg.norm(current_axis)
-    #
+    
     #         next_param_size = out_compressed_parameters_sizes[next_idx]
     #         next_param = out_compressed_parameters[next_param_size[0]:next_param_size[1]]
     #         if compressed_axis_idx[next_idx] > 0 and compressed_axis_idx[next_idx] == next_idx:
@@ -381,7 +381,7 @@ def get_sameline_components(relationship_find, newton_shapes,  compressed_parame
     #         next_center = current_center + current_axis * next_param[next_t_idx]
     #         uncompressed_param = next_param[:next_t_idx] + next_center.tolist() + next_param[next_t_idx+1:]
     #         uncompressed_parameters[next_idx] = uncompressed_param
-    #
+    #         print("current_axis: ", current_axis, "next center: ", next_center, "next_id ", next_idx )
     #         centers[next_idx] = next_center
 
     return out_compressed_parameters, out_compressed_parameters_sizes, compressed_pos_idx

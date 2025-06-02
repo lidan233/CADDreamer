@@ -8,7 +8,7 @@ from pytorch_lightning.utilities.rank_zero import rank_zero_info, rank_zero_debu
 
 
 import sys
-sys.path.append("/home/lidan/Wonder3D/neus")
+sys.path.append("/mnt/disk/CADDreamer/neus")
 
 
 import models

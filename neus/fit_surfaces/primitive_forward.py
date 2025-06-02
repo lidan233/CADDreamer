@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import sys
-sys.path.append("/media/bizon/extradisk/Wonder3D/neus")
+sys.path.append("/mnt/disk/CADDreamer/neus")
 from fit_surfaces.fitting_utils import LeastSquares, customsvd
 from fit_surfaces.primitive_utils import fitcone, fitcylinder
 from fit_surfaces.utils import regular_parameterization, guard_sqrt, rotation_matrix_a_to_b, get_rotation_matrix

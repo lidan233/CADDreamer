@@ -12,7 +12,7 @@ from collections import Counter
 from utils.util import *
 import statistics
 import sys
-sys.path.append("/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1")
+sys.path.append("./pyransac/cmake-build-release")
 import fitpoints
 import potpourri3d as pp3d
 import pymeshlab as ml

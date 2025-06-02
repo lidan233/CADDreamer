@@ -152,7 +152,3 @@ if __name__=='__main__':
         mesh.data['facelabel'] = mm_facelabel
         render_seg_color(mesh, save_img_path, None)
 
-
-        # mesh.data['facelabel'] = face_label
-        # render_seg_color(mesh, save_img_path, None)
-        # print("fuck")

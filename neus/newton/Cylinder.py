@@ -15,9 +15,20 @@ class Cylinder:
     def distance(self, p):
         diff = p - self.m_axisPos
         lambda_ = self.m_axisDir.dot(diff)
-        axisDist = (diff - lambda_ * self.m_axisDir).length()
+        axisDist = np.linalg.norm(diff - lambda_ * self.m_axisDir)
         return abs(axisDist - self.m_radius), self.project(p)
 
+    def batch_distance(self, points):
+        points = np.array(points)
+        if points.ndim == 1:
+            points = points.reshape(1, 3)
+        diff = points - self.m_axisPos
+        lambda_vals = np.einsum('ij,j->i', diff, self.m_axisDir)
+        perp_vecs = diff - lambda_vals[:, np.newaxis] * self.m_axisDir
+        axis_dists = np.linalg.norm(perp_vecs, axis=1)
+        distances = np.abs(axis_dists - self.m_radius)
+        return distances
+    
     def isAxis(self):
         return True
 

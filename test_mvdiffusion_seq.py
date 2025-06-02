@@ -292,7 +292,6 @@ def load_wonder3d_pipeline(cfg):
 
     if torch.cuda.is_available():
         pipeline.to('cuda:0')
-    # sys.main_lock = threading.Lock()
     return pipeline
 
 
@@ -387,7 +386,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
     parser.add_argument('--start', type=int, required=True)
-    parser.add_argument('--gpu', type=int, required=True)
+    parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument("--prefix", type=str, default="deepcad")
 
     args, extras = parser.parse_known_args()
@@ -435,7 +434,8 @@ if __name__ == '__main__':
             maintest(cfg, pipeline)
         config_path_for_neus = os.path.join(root_path, "neus/configs/neuralangelo-ortho-wmask.yaml")
         input_root_dir = os.path.join(root_path, "test_outputs2")
-        input_root_dir = "/mnt/disk/Wonder3D_xmu/test_outputs"
+        project_root = os.path.dirname(os.path.abspath(__file__))
+        input_root_dir = os.path.join(project_root, "test_outputs")
         input_dir_for_neus = os.path.join(input_root_dir, f"cropsize-{cfg.validation_dataset.crop_size}-cfg{1.0:.1f}", str(cfg.revision))
         if  os.path.exists(os.path.join(input_dir_for_neus,  "False_mm.obj")):
             print(os.path.join(input_dir_for_neus,  "False_mm.obj"), " is existing. ")

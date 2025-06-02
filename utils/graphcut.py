@@ -1,19 +1,8 @@
-import sys
-sys.path.append("./pyransac/cmake-build-release")
 import logging
 import community as community_louvain
 import networkx as nx
 import numpy as np
 from functools import partial, partialmethod
-from neus.newton.Plane import  Plane
-from neus.newton.Cylinder import  Cylinder
-from neus.newton.Sphere import  Sphere
-from neus.newton.Cone import  Cone
-from neus.newton.Torus import Torus
-from neus.utils.util import * 
-import fitpoints
-import torch as th
-
 
 logging.TRACE = logging.DEBUG + 5
 logging.addLevelName(logging.TRACE, 'TRACE')
@@ -173,6 +162,12 @@ def get_rf_metric_cutoff_for_test(G_origin, weight="weight", cutoff_step=0.05, d
 
 
 
+from neus.newton.Plane import  Plane
+from neus.newton.Cylinder import  Cylinder
+from neus.newton.Sphere import  Sphere
+from neus.newton.Cone import  Cone
+from neus.newton.Torus import Torus
+from neus.utils.util import * 
 
 def convertRansacToNewtonSingle(obj):
     obj_keys = obj.keys()
@@ -257,6 +252,10 @@ def run_with_timeout(vertices, normals, c_ins_label, ratio=0.1):
         # stop_process_pool(executor)
     return None, False
 
+import sys
+sys.path.append(".//pyransac/cmake-build-release")
+import fitpoints
+import torch as th
 
 def run_fit(vertices, normals, c_ins_label, ratio):
     return fitpoints.py_fit(vertices, normals, ratio, c_ins_label)
@@ -311,13 +310,12 @@ def get_valid_error_pairs(clustering, new_instance_each_images, partialInstances
 
         output_errors_adds_flag = False 
         for error_ii in error_partial_instance_idxs:
-            if not partialInstances[error_ii][4].similarity_score(newton_obj) > 0.5:
+            if  partialInstances[list(cluster)[0]][1] - 1 >= 1 and  partialInstances[error_ii][4].similarity_score(newton_obj) < 0.4:
                 output_errors_adds_flag = True 
-        
+            elif partialInstances[list(cluster)[0]][1] - 1 <= 0 and  partialInstances[error_ii][4].similarity_score(newton_obj) < 0.75:
+                output_errors_adds_flag = True 
         if output_errors_adds_flag:
             output_errors.append(1)
-    
-
     return output_errors
 
 
@@ -336,8 +334,10 @@ def build_instance_graph_new(mesh, instances, instance_idx_each_images):
         newton_obj, _ = convertRansacToNewtonSingle(ransac_obj)
         new_partial_instances.append([instance_face_idx, c_ins_label, ins_mesh, newton_obj, newton_obj])
         new_instance_each_images.append(old_intance_each_images[index])
+
     partialInstances = new_partial_instances
     graph = nx.Graph()
+
     for ins1_idx in range(len(partialInstances)):
         for ins2_idx in range(len(partialInstances)):
             c_partial_labels = np.zeros(len(mesh.faces)) - 1
@@ -346,20 +346,26 @@ def build_instance_graph_new(mesh, instances, instance_idx_each_images):
             instance_graph_edge_list = c_partial_labels[mesh.face_adjacency].astype(np.int32)
             index1 = np.all(instance_graph_edge_list == np.array([ins1_idx, ins2_idx]), axis=1)
             index2 = np.all(instance_graph_edge_list == np.array([ins2_idx, ins1_idx]), axis=1)
+            
+            
+
             if partialInstances[ins1_idx][1] == partialInstances[ins2_idx][1] and \
                     (np.any(index1) or np.any(index2) > 0):
+                
                 overlap_weight = 0 
                 similarity_weight = 0 
                 intersection = set(partialInstances[ins1_idx][0]).intersection(set(partialInstances[ins2_idx][0]))
                 if len(intersection) > 0:
                     overlap1 = len(intersection) / len(set(partialInstances[ins1_idx][0]))
                     overlap2 = len(intersection) / len(set(partialInstances[ins2_idx][0]))
-                    overlap_weight = max(overlap1, overlap2)
+                    overlap_weight = min(overlap1, overlap2)
                 else:
                     overlap_weight = 0.0
+                
                 instance_1_newton_obj = partialInstances[ins1_idx][4]
                 instance_2_newton_obj = partialInstances[ins2_idx][4]
                 similarity_weight = instance_1_newton_obj.similarity_score(instance_2_newton_obj)
+
                 graph.add_edge(ins1_idx, ins2_idx, weight=overlap_weight *0.5 + similarity_weight* 0.5)
                 
             graph.add_node(ins1_idx, instance_type=partialInstances[ins1_idx][1])
@@ -386,13 +392,8 @@ def build_instance_graph_new(mesh, instances, instance_idx_each_images):
             G = cut_graph_by_cutoff(G, cutoff, weight="weight")
             clustering = {c: idx for idx, comp in enumerate(nx.connected_components(G)) for c in comp}
             c_error_size, cut_clusters = get_error_size(clustering, new_instance_each_images)
-            # if c_error_size >= 1:
-            #     error_pairs = get_valid_error_pairs(clustering, new_instance_each_images, partialInstances, cut_clusters)
-            #     c_error_size = len(error_pairs)
-
-            if len(c_error_size) > 0:
+            if c_error_size >= 1:
                 break
-
             errors_size.append(c_error_size)
             clusterings.append(cut_clusters)
         used_clusters += list(clusterings[-1])
@@ -402,6 +403,30 @@ def build_instance_graph_new(mesh, instances, instance_idx_each_images):
 
 
 
+def get_fit_errors(old_comps_meshes, new_comps_meshes, types):
+    old_primitives = []
+    for old_mesh in old_comps_meshes:
+        ransac_obj, success_flag = run_with_timeout(old_mesh.vertices[old_mesh.faces].mean(axis=1), 
+                                                            old_mesh.face_normals, types)
+        if success_flag:
+            newton_obj, _ = convertRansacToNewtonSingle(ransac_obj)
+            old_primitives.append(newton_obj)
+    new_primitives = []
+    for new_mesh in new_comps_meshes:
+        ransac_obj, success_flag = run_with_timeout(new_mesh.vertices[new_mesh.faces].mean(axis=1), 
+                                                            new_mesh.face_normals, types)
+        if success_flag:
+            newton_obj, _ = convertRansacToNewtonSingle(ransac_obj)
+            new_primitives.append(newton_obj)
+    
+    error_mean_old = max([prim.batch_distance(mm.vertices).mean() for prim, mm in zip(old_primitives, old_comps_meshes)])
+    error_mean_new = max([prim.batch_distance(mm.vertices).mean() for prim, mm in zip(new_primitives, new_comps_meshes)])
+    if error_mean_old * 1.2 > error_mean_new and error_mean_new < 0.02:
+        return True 
+    else:
+        return False
+
+from utils.visualization import * 
 def build_instance_graph_new_max(mesh, instances, instance_idx_each_images):
     print("come in")
     new_partial_instances = []
@@ -455,9 +480,9 @@ def build_instance_graph_new_max(mesh, instances, instance_idx_each_images):
     
         errors_size = []
         if i == 0:
-            cutoff_range = np.arange(1, 0.5, -1/200)
-        elif i==1:
             cutoff_range = np.arange(1, 0.3, -1/200)
+        elif i==1:
+            cutoff_range = np.arange(1, 0.05, -1/200)
         else:
             cutoff_range = np.arange(1, 0.01, -1/200)
         clusterings = []
@@ -466,15 +491,28 @@ def build_instance_graph_new_max(mesh, instances, instance_idx_each_images):
             G = cut_graph_by_cutoff(G, cutoff, weight="weight")
             clustering = {c: idx for idx, comp in enumerate(nx.connected_components(G)) for c in comp}
             c_error_size, cut_clusters, cut_clusters_image_idx = get_error_size_new(clustering, new_instance_each_images)
+
+
+            
             if c_error_size >= 1:
                 error_pairs = get_valid_error_pairs(clustering, new_instance_each_images, partialInstances, cut_clusters, cut_clusters_image_idx)
                 c_error_size = len(error_pairs)
+        
+
             if c_error_size >= 1:
-                break
+                new_comps = list(filter(lambda x: x not in clusterings[-1], list(cut_clusters)))
+                old_comps = list(filter(lambda x: x not in list(cut_clusters), clusterings[-1]))
+                old_comps_meshes = [tri.util.concatenate([instances[c][2] for c in i]) for i in old_comps ]
+                new_comps_meshes = [tri.util.concatenate([instances[c][2] for c in i]) for i in new_comps ]
+                if len(new_comps) > 0 and len(old_comps) > 0 and not get_fit_errors(old_comps_meshes, new_comps_meshes, i):
+                    break
             errors_size.append(c_error_size)
-            clusterings.append(cut_clusters)
+            if list(cut_clusters)  not in clusterings:
+                # render_all_patches(mesh, [[jj for ii in ins for jj in instances[ii][0]] for ins in cut_clusters])
+                clusterings.append(list(cut_clusters) )
+
         used_clusters += list(clusterings[-1])
-    
+    render_all_patches(mesh, [[jj for ii in ins for jj in instances[ii][0]] for ins in used_clusters])
     return used_clusters
 
 

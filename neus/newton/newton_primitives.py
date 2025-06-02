@@ -44,7 +44,7 @@ def recover_pos_params(out_compressed_parameters, out_compressed_parameters_size
             next_param_size = out_compressed_parameters_sizes[next_idx]
             next_param = out_compressed_parameters[next_param_size[0]:next_param_size[1]]
             if compressed_axis_idx[next_idx] > 0 and compressed_axis_idx[next_idx] == next_idx:
-                next_t_idx = 3
+                next_t_idx = 3  # Center params start after axis params
             else:
                 next_t_idx = 0
             next_center = current_center + current_axis * next_param[next_t_idx]

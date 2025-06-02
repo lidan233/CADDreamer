@@ -46,6 +46,10 @@ class Sphere:
     def distance(self, p):
         return np.abs(np.linalg.norm(self.m_center - p) - self.m_radius), self.project(p)
 
+    def batch_distance(self, points):
+        return np.abs(np.linalg.norm(self.m_center - points, axis=1) - self.m_radius)
+
+
     def project(self, p):
         pp = p - self.m_center
         l = np.linalg.norm(pp)

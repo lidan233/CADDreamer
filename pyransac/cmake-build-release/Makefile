@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /media/bizon/extradisk/CADDreamer/pyransac
+CMAKE_SOURCE_DIR = /mnt/disk/Wonder3D_xmu/pyransac
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2
+CMAKE_BINARY_DIR = /mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles /media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles /mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

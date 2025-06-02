@@ -6,8 +6,6 @@ import time
 import logging
 from datetime import datetime
 
-# import sys
-# sys.path.append("/media/bizon/extradisk/Wonder3D/neus")
 
 def main(inputcfg=None):
     parser = argparse.ArgumentParser()
@@ -45,7 +43,7 @@ def main(inputcfg=None):
 
 
     import sys
-    sys.path.append("/media/bizon/extradisk/Wonder3D/neus")
+    sys.path.append("/mnt/disk/CADDreamer/neus")
     import datasets as datasets
     import systems as systems
     import pytorch_lightning as pl

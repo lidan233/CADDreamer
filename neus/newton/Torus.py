@@ -196,7 +196,63 @@ class Torus:
         return  distance, self.inv_rotate_matrix @ cross_point, self.inv_rotate_matrix @ np.array(large_circle_points.tolist() + [1])
 
 
-
+    def batch_distance(self, points):
+        points = np.array(points)
+        if points.ndim == 1:
+            points = points.reshape(1, 3)
+        
+        # Add homogeneous coordinate
+        p_u = np.hstack([points, np.ones((points.shape[0], 1))])
+        
+        # Transform all points at once
+        change_directions = (self.rotate_matrix @ p_u.T).T
+        
+        # Calculate distances to axis for all points
+        distances_to_axis = np.sqrt(change_directions[:, 0]**2 + change_directions[:, 1]**2)
+        
+        # Create plane projection points
+        plane_project_points = np.zeros((points.shape[0], 3))
+        plane_project_points[:, 0] = change_directions[:, 0]
+        plane_project_points[:, 1] = change_directions[:, 1]
+        
+        # Handle special cases
+        zero_distance_mask = (distances_to_axis == 0)
+        if np.any(zero_distance_mask):
+            change_directions[zero_distance_mask, 0] = 1e-9
+            change_directions[zero_distance_mask, 1] = 0
+            plane_project_points[zero_distance_mask, 0] = 1e-9
+            plane_project_points[zero_distance_mask, 1] = 0
+        
+        zero_z_mask = (change_directions[:, 2] == 0)
+        if np.any(zero_z_mask):
+            change_directions[zero_z_mask, 2] = -1e-9
+        
+        # Use only the 3D part of change_directions
+        change_directions_3d = change_directions[:, :3]
+        
+        # Calculate norms of plane projection points
+        plane_norms = np.linalg.norm(plane_project_points, axis=1, keepdims=True)
+        
+        # Calculate large circle points
+        large_circle_points = plane_project_points * (self.m_rlarge / plane_norms)
+        
+        # Handle special case where change_direction equals large_circle_points
+        diff_norms = np.linalg.norm(change_directions_3d - large_circle_points, axis=1)
+        zero_diff_mask = (diff_norms == 0)
+        if np.any(zero_diff_mask):
+            change_directions_3d[zero_diff_mask, 2] += 1e-9
+        
+        # Calculate vectors from large circle to change direction
+        vectors = change_directions_3d - large_circle_points
+        vector_norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        small_circle_projection_vectors = vectors / vector_norms
+        
+        # Calculate small circle projection points
+        small_circle_projection_points = large_circle_points + self.m_rsmall * small_circle_projection_vectors
+        
+        # Calculate distances
+        distances = np.linalg.norm(change_directions_3d - small_circle_projection_points, axis=1)
+        return distances
 
     def getnormal(self, p):
         dis, project_point, large_center_point = self.distance(p)

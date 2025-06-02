@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import sys
-sys.path.append("/home/lidan/Wonder3D/neus/")
+sys.path.append("/mnt/disk/CADDreamer/neus/")
 
 import models
 from models.base import BaseModel

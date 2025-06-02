@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/media/bizon/extradisk/CADDreamer/pyransac/generate_points.cpp" "CMakeFiles/fitpoints.dir/generate_points.cpp.o" "gcc" "CMakeFiles/fitpoints.dir/generate_points.cpp.o.d"
+  "/mnt/disk/Wonder3D_xmu/pyransac/generate_points.cpp" "CMakeFiles/fitpoints.dir/generate_points.cpp.o" "gcc" "CMakeFiles/fitpoints.dir/generate_points.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/media/bizon/extradisk/CADDreamer/pyransac/cmake-build-release2/CMakeFiles/libransac.dir/DependInfo.cmake"
+  "/mnt/disk/Wonder3D_xmu/pyransac/cmake-build-release1/CMakeFiles/libransac.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

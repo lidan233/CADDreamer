@@ -1,4 +1,4 @@
-# Install script for directory: /media/bizon/extradisk/CADDreamer/pyransac/pybind11
+# Install script for directory: /mnt/disk/Wonder3D_xmu/pyransac/pybind11
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
