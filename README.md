@@ -55,7 +55,7 @@ The following command loads all processed normal images from the ./test_real_ima
 This step will cache segmentation results in the neus/temp_mid_results folder and generate a STEP file. 
 Example STEP files can be found in ./cached_output/cropsize-256-cfg1.0/0_0deepcad.
 
-### Testing on Synthetic Images
+### Synthetic Images
 For convenient parallel processing, our testing is divided into 3 main steps.
 
 #### 1. Generate Multi-view Images and 3D Files
