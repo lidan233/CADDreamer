@@ -88,9 +88,9 @@ Please stay tuned. If you have any question, please contact me via email: Li.Yua
 - [x] Release `Primitive Stitching` code.
 - [x] Release `Testing` code. Released the test code in real normal images.
 - [x] Release `Testing` code. Released the test code in synthetic normal images.
-- [ ] Release `Testing` dataset.
+- [x] Release `Testing` dataset. Please refer to this [ link](https://utdallas.box.com/s/adl19p7k6pb2wwqdivfl5334n6ntwixa) to check the testing cases.
 - [ ] Release `Training` code.
-- [ ] Release `Testing Datasets`.
+- [ ] Release `Training Datasets`.
 
 ## Related Projects
 - [Wonder3D: Single Image to 3D using Cross-Domain Diffusion](https://github.com/xxlong0/Wonder3D)
