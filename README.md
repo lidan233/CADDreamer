@@ -18,6 +18,7 @@ Here are the links:
 * Finetuned Vae directory: [save as finetuned_vae_normal directory](https://utdallas.box.com/s/tkczrjm0pxcfxdwzelg1ilzoteadyvc0)
 * Check the input here: [check the input example](https://utdallas.box.com/s/jf1805d0n0x8w49h9z36tpgdlixo9rg4)
 * Check the output here: [check the output example (segmentation results)](https://utdallas.box.com/s/r6bsob98az6z0o5p5qtoh4dojhyafrv0)
+
 Then, modify the corresponding paths in the load_wonder3d_pipeline function.
 
 ### Second, Compile and install CAD-related libraries
