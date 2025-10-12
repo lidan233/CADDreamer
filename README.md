@@ -54,7 +54,7 @@ The main task is to compile and install OpenCascade and FreeCAD's Python binding
 ```bash
 '0', '22', '0', '38495 (Git)', 'git://github.com/FreeCAD/FreeCAD.git main', '2024/08/19 16:34:53', 'main', '131956e201dc5033de69ed09c28db332feb081c1'
 ```
-Using incompatible versions may lead to strange, unknown errors.
+Using incompatible versions may lead to strange, unknown errors. Please refer to this [ link](https://wiki.freecad.org/Compile_on_Linux). 
 
 ### Third, Install Python environment
 Create a Python environment using conda and install the corresponding environment using pip. 
