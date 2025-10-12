@@ -42,7 +42,7 @@ def main(inputcfg=None):
 
 
     import sys
-    sys.path.append("CADDreamer/instant_nsr_pl")
+    sys.path.append("./instant_nsr_pl")
     import datasets as datasets
     import systems as systems
     import pytorch_lightning as pl

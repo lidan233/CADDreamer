@@ -385,7 +385,7 @@ if __name__ == '__main__':
     root_path = "./"
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
-    parser.add_argument('--start', type=int, required=True)
+    parser.add_argument('--idx', type=int, required=True)
     parser.add_argument('--gpu', type=int, default=0)
     parser.add_argument("--prefix", type=str, default="deepcad")
 
@@ -416,7 +416,7 @@ if __name__ == '__main__':
         else:
             raise ValueError("xformers is not available. Make sure it is installed correctly")
 
-    revision = args.start
+    revision = args.idx
     cfg.revision = str(revision)+'_0'
     cfg.validation_dataset.filepath = "testnormal_"+str(cfg.revision)+".png"
     cfg.validation_dataset.root_dir = "./our_inputs/test_real_images"

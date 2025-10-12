@@ -1698,7 +1698,8 @@ if __name__=='__main__':
     temp_path =  cfg.output_path + "/temp_scve" + os.path.basename(cfg.config_dir)
     choose_count, trimm_face_centers, new_labels, new_trimm, components_labels,new_trimm_face_labels, bind_parallel_comps = load_cache_dill(temp_path)
     new_labels = new_trimm_face_labels
-    # try:
+
+
     if True:    
         faces = fit_cad_faces(choose_count, trimm_face_centers, new_labels, new_trimm, components_labels,new_trimm_face_labels, bind_parallel_comps, cfg)
         render_all_occ(faces)
