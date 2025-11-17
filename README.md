@@ -116,7 +116,7 @@ Please stay tuned. If you have any question, please contact me via email: Li.Yua
 - [x] Release `Testing` code. Released the test code in real normal images.
 - [x] Release `Testing` code. Released the test code in synthetic normal images.
 - [x] Release `Testing` dataset. Please refer to this [ link](https://utdallas.box.com/s/adl19p7k6pb2wwqdivfl5334n6ntwixa) to check the testing cases.
-- [ ] Release ABC Dataset Scripts (filtering and rendering). I've been getting a lot of emails asking about the ABC dataset filter and rendering script. Thanks for your interest! I'll be releasing both scripts in the next two weeks.
+- [ ] Release ABC Dataset Scripts (filtering and rendering). I've been getting a lot of emails asking about the ABC dataset filter and rendering script. Thanks for your interest! I'll be releasing both scripts in the next two weeks. (I'm very busy at the moment, but for those who need it now, you can download the current rendering script here: https://utdallas.box.com/s/mfwgz76ayl2w2t515aq4pbca3h82eyqi) 
 - [ ] Release `Training` code.
 - [ ] Release `Training Datasets`.
 
