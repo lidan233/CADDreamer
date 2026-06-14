@@ -1,0 +1,69 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.ipynb_checkpoints/
+
+# ---- training outputs / checkpoints ----
+outputs/
+finetune_vae/
+finetune_vae_semantic/
+finetune_vae_normal/
+finetuning_vae_normal/
+wonder3D-mix*/
+wonder3D-joint*/
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+logs/
+vis/
+runs/
+events.out.tfevents.*
+wandb/
+
+# ---- datasets / large data (built locally, not committed) ----
+save_h5/
+abc_dataset/
+abc-filtered/
+multiview/
+dsine_obj/
+dsine_dataset/
+*.h5
+*.h5py
+*.7z
+*.obj
+*.step
+*.stl
+*.ply
+*.glb
+*.npz
+*.npy
+*_list.json
+
+# ---- pretrained base model (downloaded separately) ----
+ckpts/
+
+# ---- blenderproc / blender ----
+blender/
+BlenderProc/
+tmp-objects/
+*.blend
+*.blend1
+
+# ---- editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+
+# ---- keep example assets used by the dataset scripts ----
+!build_dataset/step2_dsine_dataset/assets/**
+!build_dataset/step2_dsine_dataset/example/**
+!build_dataset/step3_multiview_normal_semantic_h5/example/**
+!cached_output/**

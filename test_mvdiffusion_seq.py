@@ -34,7 +34,6 @@ from transformers import CLIPImageProcessor, CLIPVisionModelWithProjection
 from mvdiffusion.models.unet_mv2d_condition import UNetMV2DConditionModel
 
 from mvdiffusion.data.single_image_dataset import SingleImageDataset as MVDiffusionDataset
-# from mvdiffusion.data.objaverse_dataset import ObjaverseDataset as MVDiffusionDataset
 from mvdiffusion.pipelines.pipeline_mvdiffusion_image import MVDiffusionImagePipeline
 
 from einops import rearrange
