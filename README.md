@@ -116,10 +116,9 @@ Please stay tuned. If you have any question, please contact me via email: Li.Yua
 - [x] Release `Testing` code. Released the test code in real normal images.
 - [x] Release `Testing` code. Released the test code in synthetic normal images.
 - [x] Release `Testing` dataset. Please refer to this [ link](https://utdallas.box.com/s/adl19p7k6pb2wwqdivfl5334n6ntwixa) to check the testing cases.
-- [x ] Release ABC Dataset Scripts (filtering and rendering).
 - [x] Release ABC Dataset Scripts (filtering and rendering). See `build_dataset/` (filter + select + render + pack h5).
 - [x] Release `Training` code and dataset.  Two VAEs + two-stage multi-view diffusion; see `build_dataset/README.md`.
-- [] Release the new version of checkpoints, which is trained with the whole abc dataset. 
+- [ ] Release the new version of checkpoints, which is trained with the whole abc dataset. 
 
 ## Related Projects
 - [Wonder3D: Single Image to 3D using Cross-Domain Diffusion](https://github.com/xxlong0/Wonder3D)
